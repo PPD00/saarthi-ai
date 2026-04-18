@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saarthi AI | Dashboard</title>
+    <meta name="description" content="Your smart venue companion for navigation, food, and facilities.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="ph-fill ph-sparkle text-cyan"></i>
+                </div>
+                <h2>Saarthi AI</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-target="view-home">
+                    <i class="ph ph-squares-four"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-target="view-nav">
+                    <i class="ph ph-navigation-arrow"></i>
+                    <span>Navigation</span>
+                </a>
+                <a href="#" class="nav-item" data-target="view-food">
+                    <i class="ph ph-hamburger"></i>
+                    <span>Food Services</span>
+                </a>
+                <a href="#" class="nav-item" data-target="view-facilities">
+                    <i class="ph ph-buildings"></i>
+                    <span>Facilities</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar"><i class="ph ph-user"></i></div>
+                    <div class="user-info">
+                        <span class="user-name">Guest User</span>
+                        <span class="user-role">VIP Access</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Dashboard View -->
+            <section id="view-home" class="view active">
+                <header class="page-header">
+                    <div>
+                        <h1>Overview</h1>
+                        <p class="subtitle">Welcome to the intelligent venue command center.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                        <button class="btn-icon"><i class="ph ph-gear"></i></button>
+                    </div>
+                </header>
+
+                <div class="dashboard-grid">
+                    <!-- AI Insights Card -->
+                    <div class="card col-span-2 glow-card">
+                        <div class="card-header">
+                            <div class="icon-box bg-purple-dim">
+                                <i class="ph-fill ph-magic-wand text-purple"></i>
+                            </div>
+                            <h3>AI Insights</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="insight-content" id="dynamic-insight">
+                                Loading real-time venue telemetry...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="icon-box bg-cyan-dim">
+                                <i class="ph ph-lightning text-cyan"></i>
+                            </div>
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="card-body quick-actions-grid">
+                            <button class="action-btn" onclick="app.findFacility('Washroom')">
+                                <i class="ph ph-toilet"></i>
+                                <span>Restroom</span>
+                            </button>
+                            <button class="action-btn" onclick="app.findFacility('Medical')">
+                                <i class="ph ph-first-aid"></i>
+                                <span>Medic</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Crowd Awareness Card -->
+                    <div class="card col-span-3">
+                        <div class="card-header">
+                            <div class="icon-box bg-blue-dim">
+                                <i class="ph ph-users-three text-blue"></i>
+                            </div>
+                            <h3>Live Crowd Heatmap</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="crowd-stats-grid" id="crowd-stats-grid">
+                                <!-- Populated by JS -->
+                            </div>
+                            <div class="alert-banner mt-4 hidden" id="dynamic-alert">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation View -->
+            <section id="view-nav" class="view">
+                <header class="page-header">
+                    <div>
+                        <h1>Smart Navigation</h1>
+                        <p class="subtitle">Find the optimal route to your destination.</p>
+                    </div>
+                </header>
+                
+                <div class="dashboard-grid">
+                    <div class="card col-span-1">
+                        <div class="card-body">
+                            <div class="search-input-group">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" placeholder="Search destination (e.g., Gate B)" id="nav-search">
+                            </div>
+                            
+                            <h4 class="section-label mt-4">Frequent Destinations</h4>
+                            <div class="pill-list mt-2">
+                                <button class="pill" onclick="app.setDestination('Gate B')">Gate B</button>
+                                <button class="pill" onclick="app.setDestination('Seat 42F')">Seat 42F</button>
+                                <button class="pill" onclick="app.setDestination('Food Court')">Food Court</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card col-span-2 relative-card">
+                        <div class="map-container">
+                            <div class="map-overlay">
+                                <i class="ph-fill ph-map-pin-line icon-large text-cyan mb-2"></i>
+                                <p id="route-instructions">Select a destination to visualize route.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="floating-recommendation hidden" id="gate-recommendation">
+                            <div class="flex-row">
+                                <i class="ph-fill ph-lightbulb text-yellow"></i>
+                                <div>
+                                    <strong>Smart Reroute</strong>
+                                    <p>Gate C is 40% less crowded. Route updated.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Food System View -->
+            <section id="view-food" class="view">
+                <header class="page-header">
+                    <div>
+                        <h1>Food Services</h1>
+                        <p class="subtitle">Order ahead and skip the lines.</p>
+                    </div>
+                </header>
+
+                <div id="food-menu" class="food-grid">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div id="food-token-view" class="card order-ticket hidden">
+                    <div class="ticket-content">
+                        <div class="ticket-header">
+                            <span class="badge bg-green-dim text-green">Order Confirmed</span>
+                            <h3>Your Digital Token</h3>
+                        </div>
+                        <div class="token-display">
+                            <div class="token-number" id="token-number">A-104</div>
+                        </div>
+                        
+                        <div class="ticket-details">
+                            <div class="detail-group text-center">
+                                <p class="text-muted">Estimated Wait Time</p>
+                                <h2 id="wait-timer" class="timer-text">15:00</h2>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-box">
+                            <i class="ph ph-qr-code"></i>
+                            <p>Scan at counter for pickup</p>
+                        </div>
+                        
+                        <button class="btn btn-danger w-full mt-4" onclick="app.cancelOrder()">Cancel Order</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Facilities View -->
+            <section id="view-facilities" class="view">
+                <header class="page-header">
+                    <div>
+                        <h1>Facility Finder</h1>
+                        <p class="subtitle">Locate essential services nearby.</p>
+                    </div>
+                </header>
+
+                <div class="dashboard-grid">
+                    <div class="card facility-selector">
+                        <div class="card-body">
+                            <div class="facility-list">
+                                <button class="facility-list-item" onclick="app.findFacility('Washroom')">
+                                    <div class="icon-box bg-cyan-dim"><i class="ph-fill ph-toilet text-cyan"></i></div>
+                                    <div class="item-info">
+                                        <h4>Washrooms</h4>
+                                        <p>Find nearest open restroom</p>
+                                    </div>
+                                    <i class="ph ph-caret-right text-muted"></i>
+                                </button>
+                                <button class="facility-list-item" onclick="app.findFacility('Exit')">
+                                    <div class="icon-box bg-purple-dim"><i class="ph-fill ph-door-open text-purple"></i></div>
+                                    <div class="item-info">
+                                        <h4>Exits</h4>
+                                        <p>Fastest evacuation routes</p>
+                                    </div>
+                                    <i class="ph ph-caret-right text-muted"></i>
+                                </button>
+                                <button class="facility-list-item" onclick="app.findFacility('Medical')">
+                                    <div class="icon-box bg-red-dim"><i class="ph-fill ph-first-aid text-red"></i></div>
+                                    <div class="item-info">
+                                        <h4>Medical Help</h4>
+                                        <p>First aid and emergency</p>
+                                    </div>
+                                    <i class="ph ph-caret-right text-muted"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="facility-result" class="card result-card hidden">
+                        <div class="card-body text-center">
+                            <div class="result-icon-lg mb-4">
+                                <i class="ph-fill ph-map-pin"></i>
+                            </div>
+                            <h2 id="facility-title">Nearest Facility</h2>
+                            <p id="facility-desc" class="text-large mt-2">Location details</p>
+                            
+                            <div class="eta-badge mt-4">
+                                <i class="ph ph-person-simple-walk"></i>
+                                <span id="facility-time">-- mins away</span>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-large w-full mt-4" onclick="app.navigateToFacility()">
+                                Start Navigation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
