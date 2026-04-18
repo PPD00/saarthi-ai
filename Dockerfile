@@ -1,4 +1,4 @@
-# Stage 1: Build the app
+# Step 1: Build stage
 FROM node:18 AS build
 
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY . .
 RUN npm run build
 
 
-# Stage 2: Serve the app
+# Step 2: Production stage
 FROM node:18
 
 RUN npm install -g serve
@@ -22,4 +22,4 @@ COPY --from=build /app/dist ./dist
 
 EXPOSE 8080
 
-CMD ["serve", "-s", "dist", "-l", "8080"]
+CMD ["serve", "-s", "dist", "-l", "0.0.0.0:8080"]
