@@ -1,20 +1,15 @@
-FROM node:18
+# Use Node 20 (required by Vite)
+FROM node:20
 
 WORKDIR /app
 
 COPY package*.json ./
-
-# IMPORTANT: install ALL deps (not production only)
 RUN npm install
 
 COPY . .
 
-# force vite to be available
-RUN npm install vite
-
 RUN npm run build
 
-# serve build output
 RUN npm install -g serve
 
 EXPOSE 8080
