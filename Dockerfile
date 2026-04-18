@@ -1,24 +1,21 @@
-# Step 1: Build stage
-FROM node:18 AS build
+FROM node:18
 
 WORKDIR /app
 
 COPY package*.json ./
+
+# IMPORTANT: install ALL deps (not production only)
 RUN npm install
 
 COPY . .
 
+# force vite to be available
+RUN npm install vite
+
 RUN npm run build
 
-
-# Step 2: Production stage
-FROM node:18
-
+# serve build output
 RUN npm install -g serve
-
-WORKDIR /app
-
-COPY --from=build /app/dist ./dist
 
 EXPOSE 8080
 
